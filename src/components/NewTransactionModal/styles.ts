@@ -58,30 +58,40 @@ export const TransactionTypecontainer = styled.div`
     gap: 0.5rem;
 
     button {
-        height: 4rem;
-        border: 1px solid #d7d7d7;
-        border-radius: 0.25rem;
+       
+    }
+`
 
-        background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content:center;
+interface RadioBoxPros {
+    isActive: boolean
+}
 
-        transition: border-color 0.2s;
+export const RadioBox = styled.button<RadioBoxPros>`
 
-        &:hover {
-            border-color: ${darken(0.1, '#d7d7d7')}
-        }
+    height: 4rem;
+    border: 1px solid #d7d7d7;
+    border-radius: 0.25rem;
 
-        img {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-        span {
-            display: inline-block;
-            margin-left: 1rem;
-            font-size: 1rem;
-            color: var(--text-title);
-        }
+    background: ${(props) => props.isActive ? '#ddd' : 'transparent' };
+
+    display: flex;
+    align-items: center;
+    justify-content:center;
+
+    transition: border-color 0.2s;
+
+    &:hover {
+        border-color: ${darken(0.1, '#d7d7d7')}
+    }
+
+    img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    span {
+        display: inline-block;
+        margin-left: 1rem;
+        font-size: 1rem;
+        color: var(--text-title);
     }
 `
