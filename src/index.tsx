@@ -15,18 +15,18 @@ createServer({
         {
           id: 1,
           title: "Curso Solidity", 
-          value: 100, 
+          amount: 100, 
           category: "Estudos",
           type: "withdraw",
-          createdAt: new Date('2021-03-10 10:00')
+          createdAt: new Date("2021-03-25T10:50")
         },
         {
           id: 2,
           title: "Stake Shitcoin", 
-          value: 400, 
+          amount: 400, 
           category: "Defi",
           type: "deposit",
-          createdAt: new Date('2021-03-25 10:34')
+          createdAt: new Date('2021-03-25T10:34')
         }
       ]
     })
