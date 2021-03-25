@@ -1,9 +1,9 @@
+import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
 import { Container, TransactionTypecontainer, RadioBox } from './styles';
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-import { useState } from 'react';
 
 interface NewTrasactionsModalProps {
     isOpen: boolean;
@@ -12,7 +12,21 @@ interface NewTrasactionsModalProps {
 
 export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsModalProps) {
 
+    const [title, setTitle] = useState('')
+    const [value, setValue] = useState(0)
+    const [category, setCategory] = useState('')
     const [type, setType] = useState('deposit')
+
+    function handleCreateNewTransaction(event: FormEvent) {
+
+        event.preventDefault();
+
+        console.log({
+            title, value, category,type
+        })
+
+    }
+
     return (
 
         <Modal 
@@ -29,13 +43,18 @@ export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsMo
                 <img src={closeImg} alt="Close modal" />
             </button>
 
-          <Container>
+          <Container onSubmit={handleCreateNewTransaction}>
             <h2>Add Transaction</h2>
 
             <input 
+                value={title}
+                onChange={event => setTitle(event.target.value)}
                 placeholder="Title" 
             />
             <input 
+                value={value}
+                onChange={event => setValue(Number(event.target.value))}
+
                 type="number"
                 placeholder="Value" 
             />
@@ -70,6 +89,8 @@ export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsMo
             </TransactionTypecontainer>
 
             <input 
+                value={category}
+                onChange={event => setCategory(event.target.value)}
                 placeholder="Category" 
             />
 
