@@ -10,7 +10,21 @@ export function Summary() {
 
     const {transactions} = useContext(TransactionsContext)
 
-    console.log(transactions)
+    const summary = transactions.reduce((acc, transaction) => {
+
+        if (transaction.type == "deposit") {
+            acc.deposit += transaction.amount
+            acc.total += transaction.amount
+        } else {
+            acc.withdraw += transaction.amount
+            acc.total -= transaction.amount
+        }
+
+        return acc
+
+    }, {deposit:0, withdraw: 0, total: 0})
+
+
 
     return (
         <Container>
@@ -26,15 +40,7 @@ export function Summary() {
                         Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL"
-
-                        }).format(
-                            transactions.reduce(
-                                (total, transaction) =>
-                                    total += transaction.type === "deposit" 
-                                    ? transaction.amount 
-                                    : 0,
-                            0)
-                        )
+                        }).format(summary.deposit)
                     }
 
                 </strong>
@@ -52,14 +58,7 @@ export function Summary() {
                         Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL"
-                        }).format(
-                            transactions.reduce(
-                                (total, transaction) =>
-                                    total += transaction.type === "withdraw" 
-                                    ? transaction.amount 
-                                    : 0,
-                            0)
-                        )
+                        }).format(summary.withdraw)
                     }
 
                 </strong>
@@ -78,15 +77,7 @@ export function Summary() {
                         Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL"
-                        }).format(
-                            transactions.reduce(
-                                (total, transaction) =>
-                                    total +=
-                                    transaction.type === "deposit"
-                                        ? transaction.amount
-                                        : (transaction.amount * -1),
-                                0)
-                        )
+                        }).format(summary.total)
                     }
 
                 </strong>
