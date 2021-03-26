@@ -1,6 +1,6 @@
 import Modal from 'react-modal';
 
-import { TransactionsProvider } from './TransactionsContext';
+import { TransactionsProvider } from './hooks/useTransactions';
 
 import { Dashboard } from "./components/Dashboard";
 import {NewTransactionModal } from "./components/NewTransactionModal";
