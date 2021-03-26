@@ -1,10 +1,14 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
-import { Container, TransactionTypecontainer, RadioBox } from './styles';
+import { TransactionsContext } from '../../TransactionsContext';
+import { api } from '../../services/api';
+
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-import { api } from '../../services/api';
+
+import { Container, TransactionTypecontainer, RadioBox } from './styles';
+
 
 interface NewTrasactionsModalProps {
     isOpen: boolean;
@@ -13,8 +17,10 @@ interface NewTrasactionsModalProps {
 
 export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsModalProps) {
 
+    const { createTransaction } = useContext(TransactionsContext);
+
     const [title, setTitle] = useState('')
-    const [value, setValue] = useState(0)
+    const [amount, setValue] = useState(0)
     const [category, setCategory] = useState('')
     const [type, setType] = useState('deposit')
 
@@ -22,11 +28,12 @@ export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsMo
 
         event.preventDefault();
 
-        const data = {
-            title, value, category,type
-        }
-        
-        api.post('transactions', data)
+        createTransaction({
+            amount,
+            category,
+            title,
+            type
+        })
 
     }
 
@@ -55,7 +62,7 @@ export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsMo
                 placeholder="Title" 
             />
             <input 
-                value={value}
+                value={amount}
                 onChange={event => setValue(Number(event.target.value))}
 
                 type="number"
@@ -68,9 +75,6 @@ export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsMo
                     onClick={() => setType('deposit')}
                     isActive={type === 'deposit'}
                     activeColor="green"
-
-
-
                 >
                     <img src={incomeImg} alt="Income" />
                     <span>Income</span>
@@ -81,9 +85,6 @@ export function NewTransactionModal({isOpen , onRequestClose} : NewTrasactionsMo
                     onClick={() => setType('withdraw')}
                     isActive={type === 'withdraw'}
                     activeColor="red"
-
-
-
                 >
                     <img src={outcomeImg} alt="Outcome" />
                     <span>Outcome</span>
